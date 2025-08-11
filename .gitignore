@@ -1,0 +1,1 @@
+venv/ __pycache__/ *.db *.sqlite* *.pyc .env logs/
