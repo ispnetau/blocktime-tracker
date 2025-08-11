@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-center">Technicians</h2>
+
+<form method="post" action="/technicians/add" class="mb-4">
+    <div class="mb-2">
+        <label>First Name:</label>
+        <input class="form-control" type="text" name="first_name" required>
+    </div>
+    <div class="mb-2">
+        <label>Last Name:</label>
+        <input class="form-control" type="text" name="last_name" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Add Technician</button>
+</form>
+
+<hr>
+
+<h3>Existing Technicians</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tech in technicians %}
+        <tr>
+            <td>{{ tech.id }}</td>
+            <td>{{ tech.first_name }}</td>
+            <td>{{ tech.last_name }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">No technicians yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

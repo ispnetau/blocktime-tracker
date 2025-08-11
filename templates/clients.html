@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="post" action="/clients" class="mb-4">
+    <div class="mb-2">
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" required>
+    </div>
+    <div class="mb-2">
+        <label>Contact Name</label>
+        <input class="form-control" type="text" name="contact_name">
+    </div>
+    <div class="mb-2">
+        <label>Email</label>
+        <input class="form-control" type="email" name="email">
+    </div>
+    <div class="mb-2">
+        <label>Phone</label>
+        <input class="form-control" type="text" name="phone">
+    </div>
+    <div class="mb-2">
+        <label>Address</label>
+        <input class="form-control" type="text" name="address">
+    </div>
+    <button class="btn btn-primary" type="submit">Add Client</button>
+</form>
+
+<h2 class="text-center">Clients</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+        <tr>
+            <td>{{ client.name }}</td>
+            <td>{{ client.contact_name }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.phone }}</td>
+            <td>{{ client.address }}</td>
+            <td>
+  <a href="/clients/{{ client.id }}/edit" class="btn btn-sm btn-warning">Edit</a>
+  <form method="post" action="/clients/{{ client.id }}/delete" style="display:inline;" onsubmit="return confirm('Delete this client?');">
+    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+  </form>
+</td>
+
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">No clients yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{#
+<hr>
+<h3>Add Contract</h3>
+<form method="post" action="/contracts" class="mb-4">
+    <div class="mb-2">
+        <label>Client</label>
+        <select class="form-select" name="client_id" required>
+            {% for client in clients %}
+            <option value="{{ client.id }}">{{ client.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-2">
+        <label>Contract Name</label>
+        <input class="form-control" type="text" name="name" required>
+    </div>
+    <div class="mb-2">
+        <label>Total Hours</label>
+        <input class="form-control" type="number" name="total_hours" min="0" step="0.1" required>
+    </div>
+    <button class="btn btn-success" type="submit">Add Contract</button>
+</form>
+
+<h4>Existing Contracts</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Contract</th>
+            <th>Total Hours</th>
+            <th>Remaining Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+            {% for contract in client.contracts %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td>{{ contract.name }}</td>
+                <td>{{ contract.hours_allocated }}</td>
+                <td>{{ contract.remaining_hours }}</td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+#}
+{% endblock %}

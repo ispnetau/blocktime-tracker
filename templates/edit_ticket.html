@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Ticket</h2>
+<form method="post">
+  <label>Title:</label><br>
+  <input type="text" name="title" value="{{ ticket.title }}" required><br><br>
+
+  <label>Description:</label><br>
+  <textarea name="description" rows="4" cols="50">{{ ticket.description }}</textarea><br><br>
+
+  <label>Date:</label><br>
+  <input type="date" name="date" value="{{ ticket.date.strftime('%Y-%m-%d') }}" required><br><br>
+
+  <label>Hours Used:</label><br>
+  <input type="number" step="0.1" name="hours_used" value="{{ ticket.hours_used }}" required><br><br>
+
+  <label>Contract:</label><br>
+  <select name="contract_id" required>
+    {% for client in clients %}
+      {% for contract in client.contracts %}
+        <option value="{{ contract.id }}" {% if contract.id == ticket.contract_id %}selected{% endif %}>
+          {{ client.name }} - {{ contract.name }}
+        </option>
+      {% endfor %}
+    {% endfor %}
+  </select><br><br>
+
+  <label>Technician:</label><br>
+  <select name="technician_id" required>
+    {% for tech in technicians %}
+      <option value="{{ tech.id }}" {% if tech.id == ticket.technician_id %}selected{% endif %}>
+        {{ tech.first_name }} {{ tech.last_name }}
+      </option>
+    {% endfor %}
+  </select><br><br>
+
+  <button type="submit">Save Changes</button>
+  <a href="/tickets">Cancel</a>
+</form>
+{% endblock %}
