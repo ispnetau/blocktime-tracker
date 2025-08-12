@@ -1,3 +1,4 @@
+from pathlib import Path
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -6,20 +7,17 @@ from sqlalchemy.orm import joinedload
 from typing import Optional
 from fastapi import Query
 from sqlalchemy import func
-from sqlalchemy.orm import joinedload
 from models import (
     SessionLocal, Client, Contract, Ticket, Technician,
     get_all_clients, get_all_tickets, get_all_technicians, get_technician_report, get_all_contracts
 )
 from datetime import datetime
-from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
-
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
