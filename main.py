@@ -12,10 +12,14 @@ from models import (
     get_all_clients, get_all_tickets, get_all_technicians, get_technician_report, get_all_contracts
 )
 from datetime import datetime
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
